@@ -63,22 +63,12 @@ h2, h3 { color: #5C3317 !important; }
 
 #Data
 
-import os
-IS_CLOUD = os.environ.get("STREAMLIT_SHARING_MODE") == "streamlit" or \
-           "HOSTNAME" in os.environ and "streamlit" in os.environ.get("HOSTNAME", "")
- 
 @st.cache_data
 def get_vocab():
     return load_vocab(VOCAB_FILE)
- 
+
 def get_scores():
-    return st.session_state.scores
- 
-def persist_scores(scores):
-    st.session_state.scores = scores
-    if not IS_CLOUD:
-        from algorithm import save_scores
-        save_scores(scores)
+    return load_scores()
 
 #Session state
 
